@@ -1,0 +1,173 @@
+:root {
+    --bg-color: #0b0f19;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-main: #e2e8f0;
+    --accent: #38bdf8;
+    /* 太空藍 */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    /* 隱藏捲軸，避免東西掉出畫面產生捲軸 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient(circle at center, #1e293b 0%, #0b0f19 100%);
+}
+
+#space-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 核心：無重力漂浮動畫 */
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(3deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+/* 個人名片樣式 */
+.astronaut-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    z-index: 10;
+    /* 預設微微漂浮 */
+    animation: float 6s ease-in-out infinite;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 25px;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+/* 終端機樣式 */
+.terminal-box {
+    background: #000;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    color: #10b981;
+    margin-bottom: 25px;
+    text-align: left;
+    box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.2);
+}
+
+.cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* 按鈕樣式 */
+button {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent);
+}
+
+/* 技能星球共同樣式 */
+.planet {
+    position: absolute;
+    padding: 15px 25px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+    color: #cbd5e1;
+    backdrop-filter: blur(5px);
+    transition: all 1s ease-in;
+    /* 掉落時的過度動畫 */
+}
+
+/* 分散技能星球的位置與不同的漂浮頻率 */
+.planet-1 {
+    top: 20%;
+    left: 15%;
+    animation: float 8s ease-in-out infinite alternate;
+}
+
+.planet-2 {
+    top: 70%;
+    left: 20%;
+    animation: float 7s ease-in-out infinite alternate-reverse;
+}
+
+.planet-3 {
+    top: 15%;
+    right: 20%;
+    animation: float 9s ease-in-out infinite alternate;
+}
+
+.planet-4 {
+    top: 65%;
+    right: 15%;
+    animation: float 6s ease-in-out infinite alternate-reverse;
+}
+
+/* ===== JS 觸發的重力狀態 ===== */
+.gravity-on .planet {
+    animation: none !important;
+    /* 停止漂浮動畫 */
+    transform: translateY(100vh) rotate(45deg) !important;
+    /* 掉落到畫面外 */
+    opacity: 0;
+}
+
+.gravity-on .astronaut-card {
+    animation: none !important;
+    transform: translateY(30vh) !important;
+    /* 名片往下掉一點但保留在畫面上 */
+    border-color: #ef4444;
+}
