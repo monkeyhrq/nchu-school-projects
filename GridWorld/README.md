@@ -32,7 +32,7 @@
 本專案採用精簡且高內聚的雙檔案核心架構：
 
 ```text
-Grid-World-DRL/
+GridWorld/
 │
 ├── app.py                 # Flask 後端應用程式 (負責 API 路由與 RL 數學運算)
 ├── templates/
